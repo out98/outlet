@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart' hide Slider;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:outlet/constant/constant.dart';
 import 'package:outlet/constant/mock.dart';
 import 'package:outlet/view/widget/home/advertisements_slider.dart';
-
+import '../../widget/home/cliptoheretoshop.dart';
 import '../../widget/home/brand_grid.dart';
+import '../../widget/home/featurelistproductinformation.dart';
 import '../../widget/home/hot_topics_slider.dart';
+import '../../widget/home/item_recommended.dart';
 import '../../widget/home/main_category_grid.dart';
+import '../../widget/home/new_products.dart';
 import '../../widget/home/row_text.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -29,7 +31,31 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: Container(color: Colors.white),
+      drawer: Drawer(
+        child: SizedBox(
+          width: size.width/2,
+          child: ListView(
+            children: [
+              //Menu
+               Container(
+                color: Colors.pink,
+                padding: const EdgeInsets.all(15),
+                child: const Center(
+                  child: Text(
+                    "MENU",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 5,
+                    ),
+                  )
+                ),
+              )
+            ]
+          ),
+        ),
+      ),
       body: ListView(
         children:  [
           const AdvertisementsSlider(),
@@ -50,35 +76,25 @@ class HomeScreen extends StatelessWidget {
           const RowText(left: "HOT TOPICSrecommended",right: "/ information"),
           const SizedBox(height: 10),
           const HotTopicsSlider(),
-         Center(
-           child: SizedBox(
-            width: size.width*0.8,
-             child: ElevatedButton(
-                  onPressed: (){}, 
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(FontAwesomeIcons.cartShopping,size: 35),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Click here to shop!",
-                          style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-           ),
-         ),
+          ClipHereToShop(size: size),
+          const SizedBox(height: 15),
+          const NewProducts(),
+          const SizedBox(height: 20),
+          const RowText(left: "RECOMMEND",right: ""),
+          const RowText(left: "ITEMRecommended",right: "/ for you"),
+          const SizedBox(height: 10),
+          ItemRecommended(products: foodItems,title: "food",),
+          const SizedBox(height: 35),
+          ItemRecommended(products: fashionItems,title: "fashion",),
+          const SizedBox(height: 35),
+          ItemRecommended(products: dailyGoodsItems,title: "daily goods",),
+          const SizedBox(height: 35),
+          ItemRecommended(products: homeCorrdyItems,title: "HOME CORRDY",),
+          const SizedBox(height: 35),
+          //Feature List Product Information
+          const FeatureListProductInformation()
         ],
       ),
     );
   }
 }
-
