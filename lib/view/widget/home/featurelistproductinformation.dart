@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../constant/mock.dart';
 import 'row_text.dart';
@@ -22,7 +24,7 @@ class FeatureListProductInformation extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 0,
-        childAspectRatio: 0.6,
+        childAspectRatio: 0.9,
         ), 
       itemBuilder: (context,index){
         final product = featureListItems[index];
@@ -31,12 +33,22 @@ class FeatureListProductInformation extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.all(8),
-            child: Image.network(product.image.first)
-            )),
+        CachedNetworkImage(
+              progressIndicatorBuilder: (context, url, status) {
+                return Shimmer.fromColors(
+                  child: Container(
+                    color: Colors.white,
+                  ),
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.white,
+                );
+              },
+              errorWidget: (context, url, whatever) {
+                return const Text("Image not available");
+              },
+              imageUrl: product.image.first,
+              fit: BoxFit.contain,
+            ),
             const SizedBox(height: 15),
         Text(
           product.name,

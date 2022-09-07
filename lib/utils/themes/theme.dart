@@ -43,6 +43,9 @@ class AppTheme{
     return ThemeData(
       textTheme: lightText,
       brightness: Brightness.light,
+      iconTheme: const IconThemeData(
+        color: Colors.pink,
+      ),
       appBarTheme:  AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 3,
@@ -86,7 +89,6 @@ class AppTheme{
         )
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(

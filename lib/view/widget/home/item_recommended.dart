@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:outlet/model/product.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../constant/mock.dart';
 
@@ -74,7 +76,22 @@ class _ItemRecommendedState extends State<ItemRecommended> {
                                         child: Container(
                                           color: Colors.white,
                                           padding: const EdgeInsets.all(8),
-                                          child: Image.network(product.image.first)
+                                          child: CachedNetworkImage(
+                                                  progressIndicatorBuilder: (context, url, status) {
+                                                    return Shimmer.fromColors(
+                                                      child: Container(
+                                                        color: Colors.white,
+                                                      ),
+                                                      baseColor: Colors.grey.shade300,
+                                                      highlightColor: Colors.white,
+                                                    );
+                                                  },
+                                                  errorWidget: (context, url, whatever) {
+                                                    return const Text("Image not available");
+                                                  },
+                                                  imageUrl: product.image.first,
+                                                  fit: BoxFit.contain,
+                                                ),
                                           )),
                                     const SizedBox(height: 15),
                                       Text(

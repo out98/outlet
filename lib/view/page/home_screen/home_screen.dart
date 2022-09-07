@@ -32,27 +32,55 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
-        child: SizedBox(
-          width: size.width/2,
-          child: ListView(
-            children: [
-              //Menu
-               Container(
-                color: Colors.pink,
-                padding: const EdgeInsets.all(15),
-                child: const Center(
-                  child: Text(
-                    "MENU",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 5,
+        child: SafeArea(
+          child: SizedBox(
+            width: size.width/2,
+            child: Column(
+              children: [
+                //Menu
+                 Container(
+                  color: Colors.pink,
+                  padding: const EdgeInsets.all(15),
+                  child: const Center(
+                    child: Text(
+                      "MENU",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 5,
+                      ),
                     ),
-                  )
+                  ),
                 ),
-              )
-            ]
+                Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: drawerItems.length,
+                    separatorBuilder: (context,index) => const Divider(),
+                    itemBuilder: (context,index){
+                      final item = drawerItems[index];
+                      return ListTile(
+                        title: item.isRow ? Row(
+                          children: [
+                            Icon(item.icon,color: Colors.pink),
+                            const SizedBox(width: 10),
+                            Text(item.name,)
+                          ],
+                        ) : Text(item.name),
+                        subtitle: Text(item.status ?? "",style: Theme.of(context)
+                        .textTheme.subtitle1,),
+                        trailing: IconButton(
+                          onPressed: (){}, 
+                          icon: const Icon(FontAwesomeIcons.chevronRight,color: Colors.pink),
+                          ),
+                      );
+                    },
+                    ),
+                ),
+              ]
+            ),
           ),
         ),
       ),
@@ -95,6 +123,36 @@ class HomeScreen extends StatelessWidget {
           const FeatureListProductInformation()
         ],
       ),
+    );
+  }
+}
+
+class CustomListTile extends StatelessWidget {
+  const CustomListTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        //Left
+        Column(
+          children: [
+            //Top
+            //Bottom
+          ],
+        ),
+        //Right
+        IconButton(
+          onPressed: (){}, 
+          icon: const Icon(
+            FontAwesomeIcons.chevronRight,
+            color: Colors.pink,
+           ),
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:outlet/model/brand.dart';
 
 import '../model/advertisement.dart';
+import '../model/drawer_item.dart';
 import '../model/main_category.dart';
 import '../model/product.dart';
 
@@ -360,4 +363,16 @@ const featureListProducts = [
     "TOPVALU Gurinai Organic Processed Food",
     "https://storage.topvalu.net/assets/contents/images/special_page/4472/banner_20220805142956.jpg"
   ]
+];
+
+final List<DrawerItem> drawerItems = [
+  DrawerItem(name: "top page",status: "TOP"),
+  DrawerItem(name: "Feature List/Product Information",status: "PRODUCT"),
+  DrawerItem(name: "campaign",status: "PROMOTION"),
+  DrawerItem(name: "recipe",status: "RECIPE"),
+  DrawerItem(name: "brand",status: "BRAND"),
+  DrawerItem(name: "Check safety and security",status: "SAFETY"),
+  DrawerItem(name: "view favourites",icon: FontAwesomeIcons.solidHeart,isRow: true),
+  DrawerItem(name: "buy online",status: "BUY"),
+  DrawerItem(name: "inquiry",status: "CONTACT"),
 ];
