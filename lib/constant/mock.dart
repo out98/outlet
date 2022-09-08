@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:outlet/model/brand.dart';
+import 'package:uuid/uuid.dart';
 
 import '../model/advertisement.dart';
 import '../model/drawer_item.dart';
@@ -91,7 +92,7 @@ List<Advertisement> advertisements = adImages.map((e) => Advertisement(
 
 List<MainCategory> mainCategories = List.generate(mainNames.length, 
 (index) => MainCategory(
-    id: mainNames[index], 
+    id: Uuid().v1(), 
     name: mainNames[index], 
     image: mainImages[index],
     dateTime: DateTime.now(),
@@ -376,3 +377,4 @@ final List<DrawerItem> drawerItems = [
   DrawerItem(name: "buy online",status: "BUY"),
   DrawerItem(name: "inquiry",status: "CONTACT"),
 ];
+

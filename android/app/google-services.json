@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "176733546087",
+    "project_id": "outlet-320ed",
+    "storage_bucket": "outlet-320ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176733546087:android:833326002b73c827bdd6c2",
+        "android_client_info": {
+          "package_name": "com.kzn.outlet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176733546087-0dv35pnvnga157i08e8dcaqbelep3o5n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kzn.outlet",
+            "certificate_hash": "c52da3a5a82ce5f1adfbceb86b30a91cbeb6de6e"
+          }
+        },
+        {
+          "client_id": "176733546087-mq83rq6d4knj4623a5oae0a9h5f2j46q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4T8dlAKjVWHN8xglS6tSAg30BmrWtj8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176733546087-mq83rq6d4knj4623a5oae0a9h5f2j46q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
