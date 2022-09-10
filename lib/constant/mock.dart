@@ -50,10 +50,7 @@ const mainNames = [
 ];
 
 const brandSubNamesAndStatus = [
-  [
-    "Aeon's new value creation brand",
-    ""
-  ],
+  ["Aeon's new value creation brand", ""],
   [
     "ion organic& Natural Brand",
     "green eye",
@@ -74,49 +71,56 @@ const brandImages = [
   "https://www.topvalu.net/img/common/brand/logo_topvalu-select.png",
 ];
 
-final List<Brand> brands = List.generate(brandImages.length, 
-(index) => Brand(
-  id: brandSubNamesAndStatus[index][0], 
-  image: brandImages[index], 
-  name: "TOPVALU", 
-  subName: brandSubNamesAndStatus[index][0], 
-  status: brandSubNamesAndStatus[index][1],
-),
+final List<Brand> mockBrands = List.generate(
+  brandImages.length,
+  (index) => Brand(
+    id: Uuid().v1(),
+    image: brandImages[index],
+    name: "TOPVALU",
+    subName: brandSubNamesAndStatus[index][0],
+    status: brandSubNamesAndStatus[index][1],
+  ),
 );
 
-List<Advertisement> advertisements = adImages.map((e) => Advertisement(
-  id: e, 
-  image: e, 
-  dateTime: DateTime.now(),
-  )).toList();
+List<Advertisement> advertisements = adImages
+    .map((e) => Advertisement(
+          id: e,
+          image: e,
+          dateTime: DateTime.now(),
+        ))
+    .toList();
 
-List<MainCategory> mainCategories = List.generate(mainNames.length, 
-(index) => MainCategory(
-    id: Uuid().v1(), 
-    name: mainNames[index], 
-    image: mainImages[index],
-    dateTime: DateTime.now(),
-  ));
+List<MainCategory> mainCategories = List.generate(
+    mainNames.length,
+    (index) => MainCategory(
+          id: Uuid().v1(),
+          name: mainNames[index],
+          image: mainImages[index],
+          dateTime: DateTime.now(),
+        ));
 
 final hotTopics = [
   Advertisement(
-    id: "1", 
-    image: "https://storage.topvalu.net/assets/page/img/arekorenavi/20220810_img_dl-cp.jpg",
-    name: "Useful for everyday life! Top value app!", 
+    id: "1",
+    image:
+        "https://storage.topvalu.net/assets/page/img/arekorenavi/20220810_img_dl-cp.jpg",
+    name: "Useful for everyday life! Top value app!",
     isHot: true,
     dateTime: DateTime.now(),
   ),
   Advertisement(
-    id: "2", 
-    image: "https://storage.topvalu.net/assets/page/img/review_cp/20210930_img_main-visual.png",
-    name: "TOPVALU Product Review Campaign", 
+    id: "2",
+    image:
+        "https://storage.topvalu.net/assets/page/img/review_cp/20210930_img_main-visual.png",
+    name: "TOPVALU Product Review Campaign",
     isHot: true,
     dateTime: DateTime.now(),
   ),
   Advertisement(
-    id: "3", 
-    image: "https://storage.topvalu.net/assets/contents/images/recipe_theme/71/banner_1661322366_159425.jpg",
-    name: "TOPVALU recipe", 
+    id: "3",
+    image:
+        "https://storage.topvalu.net/assets/contents/images/recipe_theme/71/banner_1661322366_159425.jpg",
+    name: "TOPVALU recipe",
     isHot: true,
     dateTime: DateTime.now(),
   ),
@@ -179,8 +183,9 @@ const foodRecommand = [
     "300g",
     "https://storage.topvalu.net/assets/contents/images/product/190746/4549741719544_PC_L.jpg"
   ],
+
   ///To Delete
-   [
+  [
     "Broccoli instead of rice",
     "300g",
     "https://storage.topvalu.net/assets/contents/images/product/189141/4549741652490_PC_L.jpg",
@@ -200,8 +205,9 @@ const foodRecommand = [
     "300g",
     "https://storage.topvalu.net/assets/contents/images/product/190746/4549741719544_PC_L.jpg"
   ],
+
   ///To Delete
-   [
+  [
     "Broccoli instead of rice",
     "300g",
     "https://storage.topvalu.net/assets/contents/images/product/189141/4549741652490_PC_L.jpg",
@@ -247,9 +253,9 @@ const dailyGoodsRecommand = [
 ];
 const homeCoordyRecommand = [
   [
-  "Home Coordy Microwave Storage Container Square",
-  "180ml 5 pieces",
-  "https://storage.topvalu.net/assets/contents/images/product/73526/4549741264822_PC_L.jpg",
+    "Home Coordy Microwave Storage Container Square",
+    "180ml 5 pieces",
+    "https://storage.topvalu.net/assets/contents/images/product/73526/4549741264822_PC_L.jpg",
   ],
   [
     "One push container 1.1L HOME CORRDY",
@@ -291,53 +297,88 @@ const fashionRecommand = [
 ];
 
 final List<Product> newProducts = List.generate(
-  newProductNI.length, 
+  newProductNI.length,
   (index) => Product(
-    id: newProductNI[index][1], 
-    name: newProductNI[index][0], 
-    image: [newProductNI[index][1]], 
-    description: "", 
-    price: 25000, 
+    id: newProductNI[index][1],
+    name: newProductNI[index][0],
+    image: [newProductNI[index][1]],
+    description: "",
+    price: 25000,
     parentId: "fashion",
-    status: "NEW", 
+    status: "NEW",
     dateTime: DateTime.now(),
   ),
 );
 
 final foodItems = List.generate(
-  foodRecommand.length, (index)
-  => Product(id: "$index", name: foodRecommand[index][0], 
-  image: [foodRecommand[index][2]], description: foodRecommand[index][1],
-   price: index + 100, parentId: "food", 
-   dateTime: DateTime.now()));
+    foodRecommand.length,
+    (index) => Product(
+        brandId: "",
+        rating: 2.2,
+        features: "",
+        id: "$index",
+        name: foodRecommand[index][0],
+        image: [foodRecommand[index][2]],
+        description: foodRecommand[index][1],
+        price: index + 100,
+        parentId: "food",
+        dateTime: DateTime.now()));
 
 final fashionItems = List.generate(
-  fashionRecommand.length, (index)
-  => Product(id: "$index", name: fashionRecommand[index][0], 
-  image: [fashionRecommand[index][2]], description: fashionRecommand[index][1],
-   price: index + 100, parentId: "food", 
-   dateTime: DateTime.now()));
+    fashionRecommand.length,
+    (index) => Product(
+        id: "$index",
+        brandId: "",
+        rating: 2.2,
+        features: "",
+        name: fashionRecommand[index][0],
+        image: [fashionRecommand[index][2]],
+        description: fashionRecommand[index][1],
+        price: index + 100,
+        parentId: "food",
+        dateTime: DateTime.now()));
 
 final dailyGoodsItems = List.generate(
-  dailyGoodsRecommand.length, (index)
-  => Product(id: "$index", name: dailyGoodsRecommand[index][0], 
-  image: [dailyGoodsRecommand[index][2]], description: dailyGoodsRecommand[index][1],
-   price: index + 100, parentId: "daily goods", 
-   dateTime: DateTime.now()));
+    dailyGoodsRecommand.length,
+    (index) => Product(
+        brandId: "",
+        rating: 2.2,
+        features: "",
+        id: "$index",
+        name: dailyGoodsRecommand[index][0],
+        image: [dailyGoodsRecommand[index][2]],
+        description: dailyGoodsRecommand[index][1],
+        price: index + 100,
+        parentId: "daily goods",
+        dateTime: DateTime.now()));
 
 final homeCorrdyItems = List.generate(
-  homeCoordyRecommand.length, (index)
-  => Product(id: "$index", name: homeCoordyRecommand[index][0], 
-  image: [homeCoordyRecommand[index][2]], description: homeCoordyRecommand[index][1],
-   price: index + 100, parentId: "HOME COORDY", 
-   dateTime: DateTime.now()));
+    homeCoordyRecommand.length,
+    (index) => Product(
+        brandId: "",
+        rating: 2.2,
+        features: "",
+        id: "$index",
+        name: homeCoordyRecommand[index][0],
+        image: [homeCoordyRecommand[index][2]],
+        description: homeCoordyRecommand[index][1],
+        price: index + 100,
+        parentId: "HOME COORDY",
+        dateTime: DateTime.now()));
 
 final featureListItems = List.generate(
-  featureListProducts.length, (index)
-  => Product(id: "$index", name: featureListProducts[index][0], 
-  image: [featureListProducts[index][1]], description: "",
-   price: index + 100, parentId: "HOME COORDY", 
-   dateTime: DateTime.now()));
+    featureListProducts.length,
+    (index) => Product(
+        brandId: "",
+        rating: 2.2,
+        features: "",
+        id: "$index",
+        name: featureListProducts[index][0],
+        image: [featureListProducts[index][1]],
+        description: "",
+        price: index + 100,
+        parentId: "HOME COORDY",
+        dateTime: DateTime.now()));
 
 const featureListProducts = [
   [
@@ -367,14 +408,14 @@ const featureListProducts = [
 ];
 
 final List<DrawerItem> drawerItems = [
-  DrawerItem(name: "top page",status: "TOP"),
-  DrawerItem(name: "Feature List/Product Information",status: "PRODUCT"),
-  DrawerItem(name: "campaign",status: "PROMOTION"),
-  DrawerItem(name: "recipe",status: "RECIPE"),
-  DrawerItem(name: "brand",status: "BRAND"),
-  DrawerItem(name: "Check safety and security",status: "SAFETY"),
-  DrawerItem(name: "view favourites",icon: FontAwesomeIcons.solidHeart,isRow: true),
-  DrawerItem(name: "buy online",status: "BUY"),
-  DrawerItem(name: "inquiry",status: "CONTACT"),
+  DrawerItem(name: "top page", status: "TOP"),
+  DrawerItem(name: "Feature List/Product Information", status: "PRODUCT"),
+  DrawerItem(name: "campaign", status: "PROMOTION"),
+  DrawerItem(name: "recipe", status: "RECIPE"),
+  DrawerItem(name: "brand", status: "BRAND"),
+  DrawerItem(name: "Check safety and security", status: "SAFETY"),
+  DrawerItem(
+      name: "view favourites", icon: FontAwesomeIcons.solidHeart, isRow: true),
+  DrawerItem(name: "buy online", status: "BUY"),
+  DrawerItem(name: "inquiry", status: "CONTACT"),
 ];
-
