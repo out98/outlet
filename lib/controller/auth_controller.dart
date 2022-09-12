@@ -44,53 +44,52 @@ class AuthController extends GetxController {
 
   void listenCurrentUser() {
     _auth.authStateChanges().listen((user) async {
-      if (user == null && user?.photoURL == null) {
+      debugPrint("*******CurrentUser is: ${user?.displayName}");
+      if (user == null || user.photoURL == null) {
         //Nothing do if user is null & annonymous user
       } else {
-        if (!(user == null)) {
-          debugPrint("*******user is not null****");
-          //we need to check document reference is already defined
-          final snapshot = await FirebaseFirestore.instance
+        debugPrint("*******user is not null****");
+        //we need to check document reference is already defined
+        final snapshot = await FirebaseFirestore.instance
+            .collection(userCollection)
+            .doc(user.uid)
+            .get();
+        if (!snapshot.exists) {
+          //If not define before
+          debugPrint("******Document is not exist so,we write to firebase");
+          currentUser.value = AuthUser(
+            id: user.uid,
+            emailAddress: user.email!,
+            userName: user.displayName!,
+            image: user.photoURL!,
+            points: 0,
+            status: 1,
+          );
+          await _database.write(
+            collectionPath: userCollection,
+            documentPath: currentUser.value!.id,
+            data: currentUser.value!.toJson(),
+          );
+          if (!(userStreamSubscription == null)) {
+            //if already subscripe before,need to cancel
+            //to subscripe new
+            userStreamSubscription?.cancel();
+          }
+          //If user is not null,we watch this current user's document
+          userStreamSubscription = FirebaseFirestore.instance
               .collection(userCollection)
               .doc(user.uid)
-              .get();
-          if (!snapshot.exists) {
-            //If not define before
-            debugPrint("******Document is not exist so,we write to firebase");
-            currentUser.value = AuthUser(
-              id: user.uid,
-              emailAddress: user.email!,
-              userName: user.displayName!,
-              image: user.photoURL!,
-              points: 0,
-              status: 1,
-            );
-            await _database.write(
-              collectionPath: userCollection,
-              documentPath: currentUser.value!.id,
-              data: currentUser.value!.toJson(),
-            );
-            if (!(userStreamSubscription == null)) {
-              //if already subscripe before,need to cancel
-              //to subscripe new
-              userStreamSubscription?.cancel();
+              .snapshots()
+              .listen((event) {
+            if (event.exists) {
+              debugPrint("****UserEvent: ${event.data()}");
+              currentUser.value = AuthUser.fromJson(event.data()!);
+              currentUserPoint = currentUser.value!.points;
             }
-            //If user is not null,we watch this current user's document
-            userStreamSubscription = FirebaseFirestore.instance
-                .collection(userCollection)
-                .doc(user.uid)
-                .snapshots()
-                .listen((event) {
-              if (event.exists) {
-                debugPrint("****UserEvent: ${event.data()}");
-                currentUser.value = AuthUser.fromJson(event.data()!);
-                currentUserPoint = currentUser.value!.points;
-              }
-            });
-          } else {
-            currentUser.value = AuthUser.fromJson(snapshot.data()!);
-            currentUserPoint = currentUser.value!.points;
-          }
+          });
+        } else {
+          currentUser.value = AuthUser.fromJson(snapshot.data()!);
+          currentUserPoint = currentUser.value!.points;
         }
       }
     });

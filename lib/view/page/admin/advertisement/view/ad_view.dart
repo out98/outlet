@@ -6,7 +6,7 @@ import 'package:outlet/view/widget/switch/custon_swich.dart';
 import 'package:outlet/view/widget/text_form/image_pick_form.dart';
 import 'package:outlet/view/widget/text_form/text_form.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import '../../../../../constant/constant.dart';
 
 class AdView extends StatelessWidget {
@@ -97,42 +97,68 @@ class AdView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var advertisement = adController.advertisement[index];
 
-                        return ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: 50,
-                            maxHeight: 100,
-                          ),
-                          child: Card(
-                            child: Row(
-                              children: [
-                                //Advertisement IMAGE
-                                Expanded(
-                                  child: CachedNetworkImage(
-                                    progressIndicatorBuilder:
-                                        (context, url, status) {
-                                      return Shimmer.fromColors(
-                                        baseColor: Colors.grey,
-                                        highlightColor: Colors.white,
-                                        child: Container(
-                                          color: Colors.white,
-                                        ),
-                                      );
-                                    },
-                                    errorWidget: (context, url, whatever) {
-                                      return const Text("Image not available");
-                                    },
-                                    imageUrl: advertisement.image,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                //Type
-                                Expanded(
+                        return SwipeActionCell(
+                          key: ValueKey(advertisement.id),
+                          trailingActions: [
+                            SwipeAction(
+                              onTap: (CompletionHandler _) async {
+                                await _(true);
+                                await adController.delete(advertisement.id);
+                              },
+                              content: Container(
+                                color: Colors.red,
+                                height: 35,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Text(
-                                    advertisement.name ?? "",
+                                    "DELETE",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ],
+                              ),
+                              color: Colors.white,
+                            ),
+                          ],
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              minHeight: 50,
+                              maxHeight: 100,
+                            ),
+                            child: Card(
+                              child: Row(
+                                children: [
+                                  //Advertisement IMAGE
+                                  Expanded(
+                                    child: CachedNetworkImage(
+                                      progressIndicatorBuilder:
+                                          (context, url, status) {
+                                        return Shimmer.fromColors(
+                                          baseColor: Colors.grey,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            color: Colors.white,
+                                          ),
+                                        );
+                                      },
+                                      errorWidget: (context, url, whatever) {
+                                        return const Text(
+                                            "Image not available");
+                                      },
+                                      imageUrl: advertisement.image,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  //Type
+                                  Expanded(
+                                    child: Text(
+                                      advertisement.name ?? "",
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

@@ -34,6 +34,13 @@ class ADController extends GetxController {
     isHot.value = false;
   }
 
+  Future<void> delete(String id) async {
+    await _database.delete(
+      collectionPath: advertisementCollection,
+      documentPath: id,
+    );
+  }
+
   Future<void> save() async {
     showLoading();
     if (isLoading.value) {
