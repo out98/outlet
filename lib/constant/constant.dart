@@ -11,3 +11,5 @@ const Color detailTextBackgroundColor = Colors.white;
 ButtonStyle buttonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all(Colors.orangeAccent),
 );
+
+const boxName = "productBox";

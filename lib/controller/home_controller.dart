@@ -7,6 +7,7 @@ import 'package:outlet/model/filter_enum.dart';
 import 'package:outlet/model/first_sub_category.dart';
 import 'package:outlet/model/main_category.dart';
 import 'package:outlet/model/product.dart';
+import '../model/advertisement.dart';
 import '../service/database.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,13 @@ class HomeController extends GetxController {
   String selectedCategoryId = "";
   RxString filterMainId = "".obs;
   RxString filterBrandId = "".obs;
-  Rxn<Product?> editItem = Rxn<Product?>(null);
+  Rxn<Product?> selectedItem = Rxn<Product?>(null);
   Rxn<FilterEnum> filterEnum = Rxn<FilterEnum>(filter[0].fEnum);
   RxString selectedLastParentId = "".obs;
   set setFilterMainId(String value) => filterMainId.value = value;
   set setFilterBrandId(String value) => filterBrandId.value = value;
   set setFilterEnum(FilterEnum value) => filterEnum.value = value;
-  set setEditItem(Product value) => editItem.value = value;
+  set setSelectedItem(Product value) => selectedItem.value = value;
 
   set setSelectedCategoryId(String value) => selectedCategoryId = value;
   set setSelectedLastParentId(String value) =>
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
   final RxList<MainCategory> mainCategories = <MainCategory>[].obs;
   final RxList<Product> products = <Product>[].obs;
   final RxList<Brand> brands = <Brand>[].obs;
+  final RxList<Advertisement> advertisement = <Advertisement>[].obs;
 
   final RxList<FirstSubCategory> firstCategories = <FirstSubCategory>[].obs;
   List<FirstSubCategory> selectedFirstCategories = <FirstSubCategory>[];
@@ -118,55 +120,5 @@ class HomeController extends GetxController {
       }
     });
     super.onInit();
-  }
-
-  Future<void> updateRequireVariable() async {
-    var laundryProducts = products
-        .where((e) => e.parentId == "4bf8ae90-2f63-11ed-9efb-9de59b1f78f6")
-        .toList();
-    for (var i = 0; i < laundryProducts.length; i++) {
-      await database.firestore
-          .collection(productsCollection)
-          .doc(laundryProducts[i].id)
-          .update({
-        "price": i + 100 + 2000,
-        "rating": getDouble(i),
-      });
-    }
-  }
-}
-
-double getDouble(int i) {
-  switch (i) {
-    case 1:
-      return 2.3;
-    case 2:
-      return 3.3;
-    case 3:
-      return 4.5;
-    case 4:
-      return 2.2;
-    case 5:
-      return 5;
-    case 6:
-      return 4.9;
-    case 7:
-      return 1.5;
-    case 8:
-      return 2.5;
-    case 9:
-      return 4.3;
-    case 10:
-      return 3.7;
-    case 11:
-      return 2.2;
-    case 12:
-      return 3.8;
-    case 13:
-      return 2.3;
-    case 14:
-      return 4.5;
-    default:
-      return 0.0;
   }
 }

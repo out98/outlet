@@ -295,7 +295,8 @@ const fashionRecommand = [
     "https://storage.topvalu.net/assets/contents/images/product/141224/2312194765039_PC_L.jpg"
   ]
 ];
-
+const mockProfile =
+    "https://png.pngtree.com/png-vector/20191103/ourmid/pngtree-handsome-young-guy-avatar-cartoon-style-png-image_1947775.jpg";
 final List<Product> newProducts = List.generate(
   newProductNI.length,
   (index) => Product(
@@ -410,12 +411,7 @@ const featureListProducts = [
 final List<DrawerItem> drawerItems = [
   DrawerItem(name: "top page", status: "TOP"),
   DrawerItem(name: "Feature List/Product Information", status: "PRODUCT"),
-  DrawerItem(name: "campaign", status: "PROMOTION"),
-  DrawerItem(name: "recipe", status: "RECIPE"),
   DrawerItem(name: "brand", status: "BRAND"),
-  DrawerItem(name: "Check safety and security", status: "SAFETY"),
   DrawerItem(
       name: "view favourites", icon: FontAwesomeIcons.solidHeart, isRow: true),
-  DrawerItem(name: "buy online", status: "BUY"),
-  DrawerItem(name: "inquiry", status: "CONTACT"),
 ];

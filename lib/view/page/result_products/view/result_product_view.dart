@@ -105,7 +105,7 @@ class ResultProductView extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: InkWell(
                     onTap: () {
-                      homeController.setEditItem = product;
+                      homeController.setSelectedItem = product;
                       Get.toNamed(productDetailScreen);
                     },
                     child: Column(
