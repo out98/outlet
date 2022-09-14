@@ -36,7 +36,7 @@ class ResultProductView extends StatelessWidget {
           );
         }),
         Obx(() {
-          return FilterWidget(
+          return FilterWidget<String>(
             value: homeController.filterBrandId.value,
             homeController: homeController,
             hint: "Filter by brand",
@@ -48,7 +48,7 @@ class ResultProductView extends StatelessWidget {
                       ),
                     ))
                 .toList(),
-            onChanged: (value) {},
+            onChanged: (value) => homeController.setFilterBrandId = value!,
           );
         }),
         Obx(() {
@@ -91,105 +91,115 @@ class ResultProductView extends StatelessWidget {
         //Filter Result Products List
         Obx(() {
           final items = homeController.selectedProducts;
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 0,
-              childAspectRatio: 0.6,
-            ),
-            itemBuilder: (context, index) {
-              final product = items[index];
-              return Container(
-                  padding: const EdgeInsets.all(8),
-                  child: InkWell(
-                    onTap: () {
-                      homeController.setSelectedItem = product;
-                      Get.toNamed(productDetailScreen);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          child: Hero(
-                            tag: product.image.first,
-                            child: CachedNetworkImage(
-                              progressIndicatorBuilder: (context, url, status) {
-                                return Shimmer.fromColors(
-                                  child: Container(
-                                    color: Colors.white,
+          return items.isNotEmpty
+              ? GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0,
+                    childAspectRatio: 0.6,
+                  ),
+                  itemBuilder: (context, index) {
+                    final product = items[index];
+                    return Container(
+                        padding: const EdgeInsets.all(8),
+                        child: InkWell(
+                          onTap: () {
+                            homeController.setSelectedItem = product;
+                            Get.toNamed(productDetailScreen);
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey)),
+                                child: Hero(
+                                  tag: product.image.first,
+                                  child: CachedNetworkImage(
+                                    progressIndicatorBuilder:
+                                        (context, url, status) {
+                                      return Shimmer.fromColors(
+                                        child: Container(
+                                          color: Colors.white,
+                                        ),
+                                        baseColor: Colors.grey.shade300,
+                                        highlightColor: Colors.white,
+                                      );
+                                    },
+                                    errorWidget: (context, url, whatever) {
+                                      return const Text("Image not available");
+                                    },
+                                    imageUrl: product.image.first,
+                                    fit: BoxFit.contain,
                                   ),
-                                  baseColor: Colors.grey.shade300,
-                                  highlightColor: Colors.white,
-                                );
-                              },
-                              errorWidget: (context, url, whatever) {
-                                return const Text("Image not available");
-                              },
-                              imageUrl: product.image.first,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product.name,
-                              maxLines: 2,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              children: [
-                                RatingBar.builder(
-                                  initialRating: product.rating ?? 0,
-                                  itemSize: 20,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 10,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
                                 ),
-                                const SizedBox(width: 5),
-                                Text("${product.rating ?? 0}",
+                              ),
+                              const SizedBox(height: 15),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.name,
+                                    maxLines: 2,
                                     style:
-                                        Theme.of(context).textTheme.subtitle1),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              "${product.price} MMK",
-                              maxLines: 2,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              product.description,
-                              maxLines: 2,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ));
-            },
-            itemCount: items.length,
-          );
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      RatingBar.builder(
+                                        initialRating: product.rating ?? 0,
+                                        itemSize: 20,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: const EdgeInsets.symmetric(
+                                            horizontal: 2.0),
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 10,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text("${product.rating ?? 0}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "${product.price} MMK",
+                                    maxLines: 2,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    product.description,
+                                    maxLines: 2,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ));
+                  },
+                  itemCount: items.length,
+                )
+              : const Center(
+                  child: Text(
+                  "Result products not found.....",
+                ));
         }),
       ],
     );

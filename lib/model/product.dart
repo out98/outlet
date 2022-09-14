@@ -16,6 +16,8 @@ class Product with _$Product {
     @JsonKey(nullable: true) String? brandId,
     required String parentId,
     @JsonKey(nullable: true) double? rating,
+    @JsonKey(nullable: true, defaultValue: 0) int? discountPrice,
+    @JsonKey(nullable: true, defaultValue: 0) int? requirePoint,
     required DateTime dateTime,
   }) = _Product;
 

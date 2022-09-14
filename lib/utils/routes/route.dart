@@ -2,10 +2,19 @@ import 'package:get/get.dart';
 import 'package:outlet/utils/routes/route_url.dart';
 import 'package:outlet/view/page/admin/advertisement/bin/ad_binding.dart';
 import 'package:outlet/view/page/admin/advertisement/view/ad_view.dart';
+import 'package:outlet/view/page/admin/brand/bin/brand_binding.dart';
+import 'package:outlet/view/page/admin/brand/view/brand_view.dart';
+import 'package:outlet/view/page/admin/main_category/bin/mc_binding.dart';
+import 'package:outlet/view/page/admin/main_category/view/mc_view.dart';
+import 'package:outlet/view/page/admin/product/bin/product_binding.dart';
+import 'package:outlet/view/page/admin/sub_category/bin/sc_binding.dart';
+import 'package:outlet/view/page/admin/sub_category/view/sc_view.dart';
 import 'package:outlet/view/page/favourite/favourite_screen.dart';
 import 'package:outlet/view/page/home_screen/home_screen.dart';
 import 'package:outlet/view/page/product_detail/bin/product_detail_binding.dart';
 import 'package:outlet/view/page/product_detail/view/product_detail_view.dart';
+
+import '../../view/page/admin/product/view/manage_product.dart';
 
 List<GetPage> pages = [
   GetPage(
@@ -27,5 +36,25 @@ List<GetPage> pages = [
     name: advertisementScreen,
     binding: ADBinding(),
     page: () => const AdView(),
+  ),
+  GetPage(
+    name: mainCategoryScreen,
+    binding: MCBinding(),
+    page: () => const MCView(),
+  ),
+  GetPage(
+    name: subCategoryScreen,
+    binding: SCBinding(),
+    page: () => const SCView(),
+  ),
+  GetPage(
+    name: brandScreen,
+    binding: BrandBinding(),
+    page: () => const BrandView(),
+  ),
+  GetPage(
+    name: manageProducts,
+    binding: ProductBinding(),
+    page: () => const ManageProduct(),
   ),
 ];

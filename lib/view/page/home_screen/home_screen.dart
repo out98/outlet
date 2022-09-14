@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:outlet/constant/constant.dart';
 import 'package:outlet/constant/mock.dart';
-import 'package:outlet/view/page/result_products/controller/result_product_controller.dart';
 import 'package:outlet/view/page/result_products/view/result_product_view.dart';
 import 'package:outlet/view/widget/home/advertisements_slider.dart';
 import '../../../controller/home_controller.dart';
@@ -36,7 +35,7 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(size: size),
       body: Obx(() {
-        return controller.selectedLastParentId.isEmpty
+        return controller.filterMainId.isEmpty
             ? MainHome(size: size)
             : const ResultProductView();
       }),

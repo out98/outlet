@@ -88,12 +88,12 @@ class NormalUser extends StatelessWidget {
             if (index == 0) {
               //Original Widget
               Get.back();
-              homeController.setSelectedLastParentId = "";
+              homeController.setFilterMainId = "";
               return;
             }
             if (index == 3) {
               //Favourite Screen
-              homeController.setSelectedLastParentId = "";
+              homeController.setFilterMainId = "";
               Get.toNamed(favouriteScreen);
               return;
             }

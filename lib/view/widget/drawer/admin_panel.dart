@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:outlet/constant/mock.dart';
 import 'package:outlet/utils/routes/route_url.dart';
 
 import '../../../controller/home_controller.dart';
@@ -29,6 +28,30 @@ class AdminPanel extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            Get.toNamed(manageProducts);
+          },
+          child: Container(
+            height: 60,
+            margin: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Manage Products"),
+                    Icon(Icons.upload),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
             Get.toNamed(advertisementScreen);
           },
           child: Container(
@@ -50,38 +73,14 @@ class AdminPanel extends StatelessWidget {
               ),
             ),
           ),
-        ), /* 
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(mangeItemScreen);
-          },
-          child: Container(
-            height: 60,
-            margin: EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Manage Item"),
-                    Icon(Icons.edit),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ),
         GestureDetector(
           onTap: () {
-            Get.toNamed(advertisementUrl);
+            Get.toNamed(mainCategoryScreen);
           },
           child: Container(
             height: 60,
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               left: 20,
               right: 20,
             ),
@@ -90,31 +89,7 @@ class AdminPanel extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Manage Advertisement"),
-                    Icon(Icons.edit),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(categoriesUrl);
-          },
-          child: Container(
-            height: 60,
-            margin: EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text("Manage Categories"),
                     Icon(Icons.edit),
                   ],
@@ -123,6 +98,54 @@ class AdminPanel extends StatelessWidget {
             ),
           ),
         ),
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(subCategoryScreen);
+          },
+          child: Container(
+            height: 60,
+            margin: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Manage Sub Categories"),
+                    Icon(Icons.edit),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(brandScreen);
+          },
+          child: Container(
+            height: 60,
+            margin: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Brands"),
+                    Icon(Icons.edit),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ), /*
         GestureDetector(
           onTap: () {
             Get.toNamed(statusUrl);

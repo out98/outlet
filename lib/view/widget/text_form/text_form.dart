@@ -16,6 +16,9 @@ class CustomTextForm extends StatelessWidget {
     this.leftPadding,
     this.rightPadding,
     this.error,
+    this.autoExpanded = false,
+    this.keyboaType,
+    this.maxLines,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -31,6 +34,9 @@ class CustomTextForm extends StatelessWidget {
   final String? Function(String?)? validator;
   final String? error;
   final String? stringKey;
+  final bool autoExpanded;
+  final int? maxLines;
+  final TextInputType? keyboaType;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +44,14 @@ class CustomTextForm extends StatelessWidget {
       padding: EdgeInsets.only(
           left: leftPadding ?? 0, right: rightPadding ?? 0, top: 10),
       child: SizedBox(
-        height: height ?? 55,
+        height: autoExpanded ? null : height ?? 55,
         child: Padding(
           padding: EdgeInsets.only(left: padding),
           child: TextFormField(
             controller: controller,
             validator: validator,
+            keyboardType: keyboaType,
+            maxLines: maxLines,
             decoration: InputDecoration(
               counter: null,
               counterText: "",

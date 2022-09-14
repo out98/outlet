@@ -1,102 +1,101 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:get/get.dart';
-import 'package:outlet/view/page/admin/advertisement/controller/ad_controller.dart';
-import 'package:outlet/view/widget/switch/custon_swich.dart';
-import 'package:outlet/view/widget/text_form/image_pick_form.dart';
-import 'package:outlet/view/widget/text_form/text_form.dart';
+import 'package:outlet/view/page/admin/brand/controller/brand_controller.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
-import '../../../../../constant/constant.dart';
 
-class AdView extends StatelessWidget {
-  const AdView({Key? key}) : super(key: key);
+import '../../../../../constant/constant.dart';
+import '../../../../widget/text_form/image_pick_form.dart';
+import '../../../../widget/text_form/text_form.dart';
+
+class BrandView extends StatelessWidget {
+  const BrandView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ADController adController = Get.find();
+    final BrandController brandController = Get.find();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: const Center(child: Text("ကြော်ငြာ အုပ်စုများ")),
+        title: const Center(child: Text("Brands")),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-          bottom: 16.0,
-        ),
-        child: Form(
-          key: adController.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /**Form*/
-              CustomTextForm(
-                padding: 0,
-                rightPadding: 40,
-                height: 85,
-                textFieldPaddingLeft: 10,
-                controller: adController.nameController,
-                isUnderlineBorder: false,
-                validator: adController.validate,
-                labelText: "Ad Name",
-              ),
-              Obx(() {
-                final pickedImage = adController.pickedImage.value;
-                final isEmpty = pickedImage.isEmpty;
-                return ImagePickForm(
-                  labelText: isEmpty ? "pick an image" : pickedImage,
-                  pickImage: () => adController.pickImage(),
-                );
-              }),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 40,
+      body: Form(
+        key: brandController.formKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              bottom: 16.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /**Form*/
+                CustomTextForm(
+                  padding: 0,
+                  rightPadding: 20,
+                  height: 85,
+                  textFieldPaddingLeft: 10,
+                  controller: brandController.nameController,
+                  isUnderlineBorder: false,
+                  validator: (value) => brandController.validate(value, "Name"),
+                  labelText: "Brand Name",
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text("Hot"),
-                        const SizedBox(height: 5),
-                        Obx(() {
-                          final isHot = adController.isHot.value;
-                          return CustomSwitch(
-                            value: isHot,
-                            onChanged: (value) =>
-                                adController.changeIsHot(value),
-                          );
-                        }),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () => adController.save(),
+                CustomTextForm(
+                  padding: 0,
+                  rightPadding: 20,
+                  height: 85,
+                  textFieldPaddingLeft: 10,
+                  controller: brandController.subNameController,
+                  isUnderlineBorder: false,
+                  validator: (value) =>
+                      brandController.validate(value, "Description"),
+                  labelText: "Descriptionm",
+                ),
+                CustomTextForm(
+                  padding: 0,
+                  rightPadding: 20,
+                  height: 85,
+                  textFieldPaddingLeft: 10,
+                  controller: brandController.statusController,
+                  isUnderlineBorder: false,
+                  validator: (value) =>
+                      brandController.validate(value, "Status"),
+                  labelText: "Status",
+                ),
+                Obx(() {
+                  final pickedImage = brandController.pickedImage.value;
+                  final isEmpty = pickedImage.isEmpty;
+                  return ImagePickForm(
+                    labelText: isEmpty ? "pick an image" : pickedImage,
+                    pickImage: () => brandController.pickImage(),
+                  );
+                }),
+                Align(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () => brandController.save(),
                       child: const Text("Save"),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 15),
-              /**Advertisement List*/
-              Expanded(
-                child: Obx(
+                    )),
+                const SizedBox(height: 15),
+                /**Advertisement List*/
+                Obx(
                   () {
-                    if (adController.advertisement.isEmpty) {
+                    if (brandController.brands.isEmpty) {
                       return const Center(
                           child: Text(
-                        "No advertisement yet....",
+                        "No brands yet....",
                       ));
                     }
 
                     return ListView.builder(
-                      itemCount: adController.advertisement.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: brandController.brands.length,
                       itemBuilder: (context, index) {
-                        var advertisement = adController.advertisement[index];
+                        var advertisement = brandController.brands[index];
 
                         return SwipeActionCell(
                           key: ValueKey(advertisement.id),
@@ -104,7 +103,7 @@ class AdView extends StatelessWidget {
                             SwipeAction(
                               onTap: (CompletionHandler _) async {
                                 await _(true);
-                                await adController.delete(advertisement.id);
+                                await brandController.delete(advertisement.id);
                               },
                               content: Container(
                                 color: Colors.red,
@@ -155,7 +154,7 @@ class AdView extends StatelessWidget {
                                   //Type
                                   Expanded(
                                     child: Text(
-                                      advertisement.name ?? "",
+                                      advertisement.name,
                                     ),
                                   ),
                                 ],
@@ -167,8 +166,8 @@ class AdView extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

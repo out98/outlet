@@ -1,24 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:get/get.dart';
-import 'package:outlet/view/page/admin/advertisement/controller/ad_controller.dart';
-import 'package:outlet/view/widget/switch/custon_swich.dart';
-import 'package:outlet/view/widget/text_form/image_pick_form.dart';
-import 'package:outlet/view/widget/text_form/text_form.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
-import '../../../../../constant/constant.dart';
 
-class AdView extends StatelessWidget {
-  const AdView({Key? key}) : super(key: key);
+import '../../../../../constant/constant.dart';
+import '../../../../widget/text_form/image_pick_form.dart';
+import '../../../../widget/text_form/text_form.dart';
+import '../controller/mc_controller.dart';
+
+class MCView extends StatelessWidget {
+  const MCView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ADController adController = Get.find();
+    final MCController mcController = Get.find();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: const Center(child: Text("ကြော်ငြာ အုပ်စုများ")),
+        title: const Center(child: Text("Main Categories")),
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -27,7 +27,7 @@ class AdView extends StatelessWidget {
           bottom: 16.0,
         ),
         child: Form(
-          key: adController.formKey,
+          key: mcController.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,66 +37,44 @@ class AdView extends StatelessWidget {
                 rightPadding: 40,
                 height: 85,
                 textFieldPaddingLeft: 10,
-                controller: adController.nameController,
+                controller: mcController.nameController,
                 isUnderlineBorder: false,
-                validator: adController.validate,
+                validator: mcController.validate,
                 labelText: "Ad Name",
               ),
               Obx(() {
-                final pickedImage = adController.pickedImage.value;
+                final pickedImage = mcController.pickedImage.value;
                 final isEmpty = pickedImage.isEmpty;
                 return ImagePickForm(
                   labelText: isEmpty ? "pick an image" : pickedImage,
-                  pickImage: () => adController.pickImage(),
+                  pickImage: () => mcController.pickImage(),
                 );
               }),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 40,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text("Hot"),
-                        const SizedBox(height: 5),
-                        Obx(() {
-                          final isHot = adController.isHot.value;
-                          return CustomSwitch(
-                            value: isHot,
-                            onChanged: (value) =>
-                                adController.changeIsHot(value),
-                          );
-                        }),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () => adController.save(),
-                      child: const Text("Save"),
-                    )
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 40,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () => mcController.save(),
+                    child: const Text("Save"),
+                  )),
               const SizedBox(height: 15),
               /**Advertisement List*/
               Expanded(
                 child: Obx(
                   () {
-                    if (adController.advertisement.isEmpty) {
+                    if (mcController.mainCategories.isEmpty) {
                       return const Center(
                           child: Text(
-                        "No advertisement yet....",
+                        "No main categories yet....",
                       ));
                     }
 
                     return ListView.builder(
-                      itemCount: adController.advertisement.length,
+                      itemCount: mcController.mainCategories.length,
                       itemBuilder: (context, index) {
-                        var advertisement = adController.advertisement[index];
+                        var advertisement = mcController.mainCategories[index];
 
                         return SwipeActionCell(
                           key: ValueKey(advertisement.id),
@@ -104,7 +82,7 @@ class AdView extends StatelessWidget {
                             SwipeAction(
                               onTap: (CompletionHandler _) async {
                                 await _(true);
-                                await adController.delete(advertisement.id);
+                                await mcController.delete(advertisement.id);
                               },
                               content: Container(
                                 color: Colors.red,
@@ -155,7 +133,7 @@ class AdView extends StatelessWidget {
                                   //Type
                                   Expanded(
                                     child: Text(
-                                      advertisement.name ?? "",
+                                      advertisement.name,
                                     ),
                                   ),
                                 ],

@@ -28,6 +28,12 @@ class Database {
         .get();
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> readCollection({
+    required String collectionPath,
+  }) async {
+    return await firestore.collection(collectionPath).get();
+  }
+
   Future<void> delete({
     required String collectionPath,
     required String documentPath,

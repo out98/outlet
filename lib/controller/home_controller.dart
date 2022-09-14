@@ -18,15 +18,12 @@ class HomeController extends GetxController {
   RxString filterBrandId = "".obs;
   Rxn<Product?> selectedItem = Rxn<Product?>(null);
   Rxn<FilterEnum> filterEnum = Rxn<FilterEnum>(filter[0].fEnum);
-  RxString selectedLastParentId = "".obs;
   set setFilterMainId(String value) => filterMainId.value = value;
   set setFilterBrandId(String value) => filterBrandId.value = value;
   set setFilterEnum(FilterEnum value) => filterEnum.value = value;
   set setSelectedItem(Product value) => selectedItem.value = value;
 
   set setSelectedCategoryId(String value) => selectedCategoryId = value;
-  set setSelectedLastParentId(String value) =>
-      selectedLastParentId.value = value;
 
   final RxList<MainCategory> mainCategories = <MainCategory>[].obs;
   final RxList<Product> products = <Product>[].obs;
@@ -36,6 +33,9 @@ class HomeController extends GetxController {
   final RxList<FirstSubCategory> firstCategories = <FirstSubCategory>[].obs;
   List<FirstSubCategory> selectedFirstCategories = <FirstSubCategory>[];
   RxList<Product> selectedProducts = <Product>[].obs;
+  Rxn<Product?> editProduct = Rxn<Product?>(null);
+
+  set setEditProduct(Product? value) => editProduct.value = value;
 
   void findSelectedProducts(String parentId) {
     selectedProducts.value =
@@ -95,6 +95,8 @@ class HomeController extends GetxController {
           break;
         default:
       }
+    } else {
+      selectedProducts.value = [];
     }
   }
 
