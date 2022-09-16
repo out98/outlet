@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/auth_controller.dart';
+import '../../page/login/login_screen.dart';
 
 class UnAuthenticatedProfile extends StatelessWidget {
   const UnAuthenticatedProfile({
@@ -20,7 +21,7 @@ class UnAuthenticatedProfile extends StatelessWidget {
         ),
         //LogOut
         TextButton(
-          onPressed: () => authController.googleSingIn(),
+          onPressed: () => Get.to(() => const LoginScreen()),
           child: Text(
             "LOG IN".toUpperCase(),
             style: Theme.of(context).textTheme.bodyText1,

@@ -13,6 +13,7 @@ class Product with _$Product {
     @JsonKey(nullable: true) String? features,
     required int price,
     @JsonKey(nullable: true) String? status,
+    @JsonKey(nullable: true) int? count,
     @JsonKey(nullable: true) String? brandId,
     required String parentId,
     @JsonKey(nullable: true) double? rating,

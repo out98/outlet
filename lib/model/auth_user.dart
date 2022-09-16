@@ -12,6 +12,7 @@ class AuthUser {
   final String image;
   final int points;
   final int? status;
+  final String token;
   AuthUser({
     required this.id,
     required this.emailAddress,
@@ -19,6 +20,7 @@ class AuthUser {
     required this.image,
     required this.points,
     this.status = 0,
+    required this.token,
   });
 
   factory AuthUser.fromJson(Map<String, dynamic> json) =>
@@ -33,5 +35,6 @@ class AuthUser {
         image: mockProfile,
         points: 0,
         status: 0,
+        token: "testToken",
       );
 }

@@ -13,8 +13,18 @@ ButtonStyle buttonStyle = ButtonStyle(
 );
 
 const boxName = "productBox";
+const purchaseBox = "purchaseBox";
 
 const List<String> statusList = [
   "NEW",
   "RECOMMEND",
 ];
+
+enum PaymentOptions {
+  CashOnDelivery,
+  PrePay,
+  None,
+}
+
+const fcmKey =
+    "AAAAKSYj5mc:APA91bH8mUxPIyxEFH-ERNib8Ah_lCGEmi_vXsD8AacyUyqt_8ZUrTx-9yNEherKxxFbdnSyW8M5WkZLYCPuXySKauMTZtfPvopGSopnO3OVhnJNjXANuSMc77An4zitzAuSly2GWW4c";

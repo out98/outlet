@@ -6,3 +6,7 @@ const mainCategoryScreen = "/main_categories";
 const subCategoryScreen = "/sub_categories";
 const brandScreen = "/brands";
 const manageProducts = "/manage_products";
+const myCartScreen = "/my_cart";
+const orderScreen = "/orders";
+const purchaseHistory = "/purchase_history";
+const brandDetailScreen = "/brand_detail";

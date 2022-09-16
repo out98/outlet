@@ -91,10 +91,16 @@ class NormalUser extends StatelessWidget {
               homeController.setFilterMainId = "";
               return;
             }
-            if (index == 3) {
+            if (index == 2) {
               //Favourite Screen
               homeController.setFilterMainId = "";
               Get.toNamed(favouriteScreen);
+              return;
+            }
+            if (index == 3) {
+              //Favourite Screen
+              homeController.setFilterMainId = "";
+              Get.toNamed(purchaseHistory);
               return;
             }
             drawerController.setSelectedDrawerItem(item.name);
@@ -111,10 +117,12 @@ class NormalUser extends StatelessWidget {
                   ],
                 )
               : Text(item.name),
-          subtitle: Text(
-            item.status ?? "",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
+          subtitle: item.isRow
+              ? null
+              : Text(
+                  item.status ?? "",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
           trailing: const Icon(
             FontAwesomeIcons.chevronRight,
             color: Colors.pink,

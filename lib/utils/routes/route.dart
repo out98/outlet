@@ -9,12 +9,18 @@ import 'package:outlet/view/page/admin/main_category/view/mc_view.dart';
 import 'package:outlet/view/page/admin/product/bin/product_binding.dart';
 import 'package:outlet/view/page/admin/sub_category/bin/sc_binding.dart';
 import 'package:outlet/view/page/admin/sub_category/view/sc_view.dart';
+import 'package:outlet/view/page/band_detail/bin/brand_detail_binding.dart';
+import 'package:outlet/view/page/band_detail/view/brand_detail_view.dart';
+import 'package:outlet/view/page/cart/view/cart_view.dart';
 import 'package:outlet/view/page/favourite/favourite_screen.dart';
 import 'package:outlet/view/page/home_screen/home_screen.dart';
+import 'package:outlet/view/page/order_history/bin/order_history_bindng.dart';
+import 'package:outlet/view/page/order_history/order_history.dart';
 import 'package:outlet/view/page/product_detail/bin/product_detail_binding.dart';
 import 'package:outlet/view/page/product_detail/view/product_detail_view.dart';
 
 import '../../view/page/admin/product/view/manage_product.dart';
+import '../../view/page/admin/user_order/user_order_view.dart';
 
 List<GetPage> pages = [
   GetPage(
@@ -56,5 +62,23 @@ List<GetPage> pages = [
     name: manageProducts,
     binding: ProductBinding(),
     page: () => const ManageProduct(),
+  ),
+  GetPage(
+    name: myCartScreen,
+    page: () => const CartView(),
+  ),
+  GetPage(
+    name: orderScreen,
+    page: () => const UserOrderView(),
+  ),
+  GetPage(
+    name: purchaseHistory,
+    binding: OrderHistoryBinding(),
+    page: () => const OrderHistory(),
+  ),
+  GetPage(
+    name: brandDetailScreen,
+    binding: BrandDetailBinding(),
+    page: () => const BrandDetailView(),
   ),
 ];

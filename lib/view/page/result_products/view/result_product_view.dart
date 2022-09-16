@@ -20,6 +20,7 @@ class ResultProductView extends StatelessWidget {
       children: [
         //Filter 3Functions
         Obx(() {
+          debugPrint("*****FilterMainId: ${homeController.filterMainId.value}");
           return FilterWidget<String>(
             value: homeController.filterMainId.value,
             homeController: homeController,

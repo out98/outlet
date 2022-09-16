@@ -11,7 +11,7 @@ class Brand with _$Brand {
     required String name,
     required String subName,
     required String status,
+    String? description,
   }) = _Brand;
-  factory Brand.fromJson(Map<String,dynamic> json)
-  => _$BrandFromJson(json);
+  factory Brand.fromJson(Map<String, dynamic> json) => _$BrandFromJson(json);
 }

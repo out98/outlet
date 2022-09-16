@@ -44,6 +44,7 @@ class _AppDrawerState extends State<AppDrawer> with TickerProviderStateMixin {
           child: SizedBox(
             width: widget.size.width / 2,
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 FirstWidget(

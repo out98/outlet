@@ -16,7 +16,7 @@ class SCView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: const Center(child: Text("Main Categories")),
+        title: const Center(child: Text("Sub Categories")),
       ),
       body: Padding(
         padding: const EdgeInsets.only(

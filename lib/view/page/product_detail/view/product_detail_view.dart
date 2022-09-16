@@ -6,14 +6,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:outlet/controller/cart_controller.dart';
 import 'package:outlet/model/hive_product.dart';
 import 'package:outlet/model/product.dart';
 import 'package:outlet/model/review.dart';
+import 'package:outlet/view/page/login/login_screen.dart';
 import 'package:outlet/view/page/product_detail/controller/product_detail_controller.dart';
 import 'package:outlet/view/widget/rating_bar/immutable_ratingbar.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../constant/constant.dart';
 import '../../../../constant/mock.dart';
+import '../../../../controller/auth_controller.dart';
 import '../../../../controller/home_controller.dart';
 import '../../../widget/prouct_detail/expanded_widget.dart';
 
@@ -23,6 +26,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.find();
+    final AuthController authController = Get.find();
     final currentProduct = controller.selectedItem.value!;
     final category = controller.firstCategories
         .where((e) => e.id == currentProduct.parentId)
@@ -34,6 +38,7 @@ class DetailScreen extends StatelessWidget {
         .name;
     final size = MediaQuery.of(context).size;
     final ProuctDetailController detailController = Get.find();
+    final CartController cartController = Get.find();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -570,22 +575,35 @@ class DetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: 65,
-        // decoration: BoxDecoration(
-        //   color: detailBackgroundColor,
-        //   borderRadius: BorderRadius.only(
-        //     topLeft: Radius.circular(20),
-        //     topRight: Radius.circular(20),
-        //   ),
-        // ),
-        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text("၀ယ်ယူရန်"),
-        ),
-      ),
+      bottomNavigationBar: Obx(() {
+        final isContain = cartController.myCart.containsKey(currentProduct.id);
+        final isNotAuthenticate =
+            authController.currentUser.value!.status! == 0;
+        return SizedBox(
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ))),
+            onPressed: isContain
+                ? null
+                : () {
+                    if (isNotAuthenticate) {
+                      Get.to(() => const LoginScreen());
+                    } else {
+                      cartController.addCount(currentProduct);
+                    }
+                  },
+            child: isContain
+                ? const Text("စျေးခြင်းထဲသို့ထည့်ပြီး")
+                : const Text(
+                    "စျေးခြင်းထဲသို့ထည့်မည်",
+                  ),
+          ),
+        );
+      }),
     );
   }
 }

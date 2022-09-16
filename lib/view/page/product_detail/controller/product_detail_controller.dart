@@ -8,11 +8,13 @@ import 'package:outlet/model/auth_user.dart';
 import 'package:outlet/model/review.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../controller/auth_controller.dart';
 import '../../../../service/database.dart';
 
 class ProuctDetailController extends GetxController {
   final _database = Database();
   final HomeController _homeController = Get.find();
+  final AuthController _authController = Get.find();
   final TextEditingController ratingController = TextEditingController();
   final TextEditingController reviewController = TextEditingController();
   RxList<Review> reviewsList = <Review>[].obs;
@@ -35,13 +37,8 @@ class ProuctDetailController extends GetxController {
     }
     if (checkValidate()) {
       isLoading.value = true;
-      final currentUser = AuthUser(
-        id: "testuserid",
-        emailAddress: "testuser@gmail.com",
-        userName: "Test User",
-        image: mockProfile,
-        points: 0,
-      ); /*TO DO TO insert with real 
+      final currentUser = _authController.currentUser
+          .value!; /*TO DO TO insert with real 
       authenticated user.*/
       final review = Review(
         id: Uuid().v1(),

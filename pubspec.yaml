@@ -42,6 +42,7 @@ dependencies:
   uuid: ^3.0.6
   flutter_rating_bar: ^4.0.1
   expandable: ^5.0.1
+  shared_preferences: ^2.0.15
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -56,6 +57,11 @@ dependencies:
   firebase_messaging: ^11.2.3
   image_picker:
   flutter_swipe_action_cell: ^3.0.4
+  photo_view: ^0.14.0
+  printing: ^5.9.3
+  pdf: ^3.8.3
+  dio: ^4.0.6
+  flutter_local_notifications: ^9.9.1
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +90,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -99,6 +107,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Cherry Unicode
+      fonts:
+        - asset: fonts/Cherry_Unicode.ttf
+    - family: OleoScriptSwashCaps
+      fonts:
+        - asset: fonts/OleoScriptSwashCaps-Bold.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

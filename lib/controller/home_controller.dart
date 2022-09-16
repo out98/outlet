@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:outlet/constant/collection_path.dart';
 import 'package:outlet/model/brand.dart';
@@ -8,11 +7,13 @@ import 'package:outlet/model/first_sub_category.dart';
 import 'package:outlet/model/main_category.dart';
 import 'package:outlet/model/product.dart';
 import '../model/advertisement.dart';
+import '../model/purchase.dart';
 import '../service/database.dart';
 import 'package:flutter/material.dart';
 
 class HomeController extends GetxController {
   final database = Database();
+  Rxn<Brand?> editBrand = Rxn<Brand>(null);
   String selectedCategoryId = "";
   RxString filterMainId = "".obs;
   RxString filterBrandId = "".obs;
@@ -22,7 +23,7 @@ class HomeController extends GetxController {
   set setFilterBrandId(String value) => filterBrandId.value = value;
   set setFilterEnum(FilterEnum value) => filterEnum.value = value;
   set setSelectedItem(Product value) => selectedItem.value = value;
-
+  set setEditBrand(Brand brand) => editBrand.value = brand;
   set setSelectedCategoryId(String value) => selectedCategoryId = value;
 
   final RxList<MainCategory> mainCategories = <MainCategory>[].obs;
@@ -34,8 +35,17 @@ class HomeController extends GetxController {
   List<FirstSubCategory> selectedFirstCategories = <FirstSubCategory>[];
   RxList<Product> selectedProducts = <Product>[].obs;
   Rxn<Product?> editProduct = Rxn<Product?>(null);
+  final RxList<PurchaseModel> _purchcases = <PurchaseModel>[].obs; ////
 
   set setEditProduct(Product? value) => editProduct.value = value;
+
+  List<PurchaseModel> purchcasesCashOn() {
+    return _purchcases.where((item) => item.bankSlipImage == null).toList();
+  }
+
+  List<PurchaseModel> purchcasesPrePay() {
+    return _purchcases.where((item) => item.bankSlipImage != null).toList();
+  }
 
   void findSelectedProducts(String parentId) {
     selectedProducts.value =
@@ -46,7 +56,11 @@ class HomeController extends GetxController {
     debugPrint("******FirstCategoiresLength: ${firstCategories.length}");
     selectedFirstCategories =
         firstCategories.where((e) => e.parentId == parentId).toList();
-    filterMainId.value = selectedFirstCategories.first.id;
+    if (selectedFirstCategories.isNotEmpty) {
+      filterMainId.value = selectedFirstCategories.first.id;
+    } else {
+      filterMainId.value = parentId;
+    }
   }
 
   void filterFunction() {
@@ -100,8 +114,16 @@ class HomeController extends GetxController {
     }
   }
 
+  late ByteData oleoBold;
+  late ByteData cherryUnicode;
   @override
-  void onInit() {
+  void onInit() async {
+    oleoBold = await rootBundle.load("fonts/OleoScriptSwashCaps-Bold.ttf");
+    cherryUnicode = await rootBundle.load("fonts/Cherry_Unicode.ttf");
+    database.watch(advertisementCollection).listen((event) {
+      advertisement.value =
+          event.docs.map((e) => Advertisement.fromJson(e.data())).toList();
+    });
     database.watch(mainCategoriesCollection).listen((event) {
       mainCategories.value =
           event.docs.map((e) => MainCategory.fromJson(e.data())).toList();
@@ -119,6 +141,14 @@ class HomeController extends GetxController {
         brands.value = event.docs.map((e) => Brand.fromJson(e.data())).toList();
         debugPrint("*****Brand Length: ${brands.length}");
         filterBrandId.value = brands.first.id;
+      }
+    });
+    database.watch(purchaseCollection).listen((event) {
+      if (event.docs.isEmpty) {
+        _purchcases.clear();
+      } else {
+        _purchcases.value =
+            event.docs.map((e) => PurchaseModel.fromJson(e.data())).toList();
       }
     });
     super.onInit();
